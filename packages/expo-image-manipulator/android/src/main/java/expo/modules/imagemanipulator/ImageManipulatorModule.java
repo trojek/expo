@@ -38,7 +38,7 @@ import expo.modules.imagemanipulator.arguments.SaveOptions;
 
 public class ImageManipulatorModule extends ExportedModule implements ModuleRegistryConsumer {
   private static final String TAG = "ExpoImageManipulator";
-  private static final String ERROR_TAG = "E_IMG_MANIP";
+  private static final String ERROR_TAG = "E_IMAGe_MANIPULATOR";
 
   public ImageManipulatorModule(Context context) {
     super(context);
@@ -132,8 +132,7 @@ public class ImageManipulatorModule extends ExportedModule implements ModuleRegi
     Matrix rotationMatrix = new Matrix();
     if (flip.isHorizontal()) {
       rotationMatrix.postScale(-1, 1);
-    }
-    if (flip.isVertical()) {
+    } else if (flip.isVertical()) {
       rotationMatrix.postScale(1, -1);
     }
     return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), rotationMatrix, true);

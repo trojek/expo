@@ -2,6 +2,7 @@ package expo.modules.imagemanipulator.arguments;
 
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,29 @@ public class Action extends HashMap<String, Object> {
     Integer rotate = rotateDouble != null ? rotateDouble.intValue() : null;
     ActionFlip flip = optionsMap.containsKey(KEY_FLIP) ? ActionFlip.fromObject(optionsMap.get(KEY_FLIP)) : null;
     ActionCrop crop = optionsMap.containsKey(KEY_CROP) ? ActionCrop.fromObject(optionsMap.get(KEY_CROP)) : null;
+
+    ArrayList<Object> actions = new ArrayList<>();
+    actions.add(resize);
+    actions.add(rotate);
+    actions.add(flip);
+    actions.add(crop);
+    int actionsCounter = 0;
+    for (Object action : actions) {
+      if (action != null) {
+        actionsCounter += 1;
+      }
+    }
+    if (actionsCounter != 1) {
+      throw new IllegalArgumentException(
+          String.format(
+              "Single action must contain exactly one transformation from list: ['%s', '%s', '%s', '%s']",
+              KEY_RESIZE,
+              KEY_ROTATE,
+              KEY_FLIP,
+              KEY_CROP
+          )
+      );
+    }
 
     return new Action(resize, rotate, flip, crop);
   }

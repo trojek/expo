@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import expo.core.Promise;
+import expo.core.utilieties.FileUtilities;
 import expo.modules.camera.CameraViewHelper;
-import expo.modules.camera.utils.FileSystemUtils;
 
 public class ResolveTakenPictureAsyncTask extends AsyncTask<Void, Void, Bundle> {
   private static final String DIRECTORY_NOT_FOUND_MSG = "Documents directory of the app could not be found.";
@@ -232,7 +232,7 @@ public class ResolveTakenPictureAsyncTask extends AsyncTask<Void, Void, Bundle> 
     FileOutputStream outputStream = null;
 
     try {
-      outputPath = FileSystemUtils.generateOutputPath(mDirectory, DIRECTORY_NAME,EXTENSION);
+      outputPath = FileUtilities.generateOutputPath(mDirectory, DIRECTORY_NAME,EXTENSION);
       outputStream = new FileOutputStream(outputPath);
       inputStream.writeTo(outputStream);
     } catch (IOException e) {

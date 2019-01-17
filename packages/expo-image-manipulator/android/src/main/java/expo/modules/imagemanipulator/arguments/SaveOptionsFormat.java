@@ -26,7 +26,7 @@ public enum SaveOptionsFormat {
         return f;
       }
     }
-    return SaveOptionsFormat.JPEG;
+    throw new IllegalArgumentException(errorMessage);
   }
 
   public Bitmap.CompressFormat getCompressFormat() {

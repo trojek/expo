@@ -20,7 +20,7 @@ public class ActionFlip {
     mHorizontal = horizontal;
   }
 
-  static ActionFlip fromObject(Object options) {
+  static ActionFlip fromObject(Object options) throws IllegalArgumentException {
     Map optionsMap = Utilities.ensureMap(options, TAG);
 
     Boolean verticalNullable = Utilities.getBooleanFromOptions(optionsMap, KEY_VERTICAL, TAG + "." + KEY_VERTICAL);

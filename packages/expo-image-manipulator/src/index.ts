@@ -7,23 +7,35 @@ type ImageResult = {
   width: number;
   height: number;
   base64?: string;
-};
+}
 
-type CropParameters = {
-  originX: number;
-  originY: number;
-  width: number;
-  height: number;
-};
+type ActionResize = {
+  resize: {
+    width?: number;
+    height?: number;
+  };
+}
 
-type ImageManipulationActions = {
-  resize?: { width?: number; height?: number };
-  rotate?: number;
-  flip?: { vertical?: boolean; horizontal?: boolean };
-  crop?: CropParameters;
-};
+type ActionRotate = {
+  rotate: number;
+}
 
-type SaveOptions = {
+type ActionFlip = {
+  flip: { vertical: boolean; } | { horizontal: boolean; };
+}
+
+type ActionCrop = {
+  crop: {
+    originX: number;
+    originY: number;
+    width: number;
+    height: number;
+  };
+}
+
+type Action = ActionResize | ActionRotate | ActionFlip | ActionCrop;
+
+interface SaveOptions {
   base64?: boolean;
   compress?: number;
   format?: 'jpeg' | 'png';
@@ -31,11 +43,11 @@ type SaveOptions = {
 
 export async function manipulateAsync(
   uri: string,
-  actions: ImageManipulationActions[] = [],
-  saveOptions: SaveOptions = {}
+  actions: Action[] = [],
+  saveOptions: SaveOptions = { format: 'jpeg' },
 ): Promise<ImageResult> {
   if (!(typeof uri === 'string')) {
-    throw new TypeError(`The "uri" argument must be a string`);
+    throw new TypeError('The "uri" argument must be a string');
   }
   return await ExpoImageManipulator.manipulateAsync(uri, actions, saveOptions);
 }
